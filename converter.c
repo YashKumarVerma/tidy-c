@@ -164,7 +164,6 @@ int processOpeningBraces(FILE *output, char ch){
         FILE *log = fopen("log.txt", "a+");
         fprintf(log, "%d\t%s\n", ++lineNumber, "processing {");
 
-
         // first print the curly braces to preserve code style
         fputc('{', output);
         fputc('\n', output);
@@ -174,6 +173,8 @@ int processOpeningBraces(FILE *output, char ch){
         indentLevel++;
         fprintf(log, "%d\t%s%d\n", ++lineNumber, "indentLevel=", indentLevel);
         
+        lineStart = 0;
+
         fclose(log);
         return 1;
     }
@@ -188,8 +189,13 @@ int processClosingBraces(FILE *output, char ch){
         FILE *log = fopen("log.txt", "a+");
         fprintf(log, "%d\t%s\n", ++lineNumber, "processing }");
 
+        // indent it bitch
+        int i=0;
+        for(i=0; i<indentLevel-1; i++){
+            fputc('\t', output);
+        }
+
         // print a new line chracter as closing brakets always come at newline
-        fputc('\n', output);
         fputc('}', output);
         fputc('\n', output);
 
