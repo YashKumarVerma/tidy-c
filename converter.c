@@ -24,24 +24,16 @@ int processOpeningBraces(FILE*, char);
 
 int processClosingBraces(FILE*, char);
 
-
-// loggging functions
-void write(FILE*, char *);
-
 // main caller function
 int main(){
     // variable to collect junk data
     int flag = 0;
 
-    // dummy string to write logs
-    char str[2];
-    str[0] = ' ';
-    str[1] = '\0';
 
     // file pointer to handle input and output streasms
     FILE *input;
     FILE *output;
-    FILE *log;
+    FILE *log = fopen("log.txt", "w");
 
     // assign file pointers to files
     input = fopen("ugly.c", "r");
@@ -49,21 +41,17 @@ int main(){
     log = fopen("log.txt", "w");
 
     // log operation starts
-    write(log, "3 Files loaded as pointers");
+    fprintf(log, "%d\t%s\n", ++lineNumber, "Loaded 3 files as pointers");   
 
     //  get initial character form file
     char ch = fgetc(input);
-    str[0] = ch;
-    write(log, "reading character");
-    write(log, str);
-
+    
+    fclose(log);
     // loop through all characters of file
     while(ch != EOF){
 
         // if charcter is semi colon, handle it
         if(processTerminationSymbols(output, ch)){
-            // add termination symbol to stack;
-            // push(';');
             flag = 1;
         }
         else if(processCommaSymbols(output, ch)){
@@ -77,6 +65,9 @@ int main(){
             flag = 1;
         }
         else{
+            FILE *log = fopen("log.txt", "a+");
+            fprintf(log, "%d\t%s%c\n", ++lineNumber, "printing : ", ch);
+            fclose(log);
 
             indent(output);
             fputc(ch, output);
@@ -85,6 +76,8 @@ int main(){
         // read one more charcter form stream
         ch = getc(input);
     }
+
+    fprintf(log, "%d\t%s\n", ++lineNumber, "ENDING !");   
     return 0;
 }
 
@@ -119,34 +112,45 @@ char getTop(){
 
 // styling operations
 void indent(FILE *fs){
-
     if(!lineStart){
+        lineStart = 1;
         int i;
         for(i=0; i<indentLevel; i++){
             fputc('\t',fs);
         }
     }
-
     // // give n level indent
 }
 
 // function returns 1 when passed character was termination symbol and add newline at end
 int processTerminationSymbols(FILE* output, char ch){
     if( ch == ';' ){
+        FILE *log = fopen("log.txt", "a+");
+        fprintf(log, "%d\t%s\n", ++lineNumber, "printing ; , \\n");   
         fputc(';', output);
         fputc('\n', output);
+
+        fprintf(log, "%d\t%s\n", ++lineNumber, "lineStart = 0");   
         lineStart = 0;
+        fclose(log);
         return 1;
     }
     else{
         return 0;
     }
+
 }
 
 int processCommaSymbols(FILE *output, char ch){
     if(ch == ','){
+        // update logs
+        FILE *log = fopen("log.txt", "a+");
+        fprintf(log, "%d\t%s\n", ++lineNumber, "processing ,");
+
         fputc(' ', output);
         fputc(',', output);
+
+        fclose(log);
         return 1;
     }else{
         return 0;
@@ -155,13 +159,22 @@ int processCommaSymbols(FILE *output, char ch){
 
 int processOpeningBraces(FILE *output, char ch){
     if(ch=='{'){
+
+        // write logs
+        FILE *log = fopen("log.txt", "a+");
+        fprintf(log, "%d\t%s\n", ++lineNumber, "processing {");
+
+
         // first print the curly braces to preserve code style
         fputc('{', output);
         fputc('\n', output);
 
         // increase indent by one level
+
         indentLevel++;
+        fprintf(log, "%d\t%s%d\n", ++lineNumber, "indentLevel=", indentLevel);
         
+        fclose(log);
         return 1;
     }
     else{
@@ -171,27 +184,21 @@ int processOpeningBraces(FILE *output, char ch){
 
 int processClosingBraces(FILE *output, char ch){
     if(ch=='}'){
+        
+        FILE *log = fopen("log.txt", "a+");
+        fprintf(log, "%d\t%s\n", ++lineNumber, "processing }");
+
         // print a new line chracter as closing brakets always come at newline
         fputc('\n', output);
         fputc('}', output);
         fputc('\n', output);
 
         indentLevel--;
+        fprintf(log, "%d\t%s%d\n", ++lineNumber, "indentLevel=", indentLevel);
 
         return 1;
     }
     else{
         return 0;
     }
-}
-
-// logging operations
-void write(FILE *log,int type, char str[]){
-    
-    // print lineNumber
-    lineNumber++;
-    fprintf(log, "%d", lineNumber);
-    fputc('\t', log);
-    fputs(str, log);
-    fputs("\n", log);
 }
