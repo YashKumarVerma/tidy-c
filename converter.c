@@ -1,87 +1,130 @@
 #include<stdio.h>
 #include<string.h>
 
-#define MAX 1024
-char stack[MAX];
-int top = -1;
+
+// Stack Operations
+// #define MAX 1024
+// char stack[MAX];
+// int top = -1;
+
+// stack operations
+// void push(char s);
+// int pop();
+// char getTop();
+
+// functions to manage styling
 int indentLevel = 0;
 int lineStart = 0;
 int lineNumber = 0;
 
-// stack operations
-void push(char s);
-int pop();
-char getTop();
-
-// styling functions
+// function to give indentation as per global config
 void indent(FILE *fs);
 
+// function to handle processes attached to termination symbol
 int processTerminationSymbols(FILE*, char);
 
+// function to handle operations related to comma (,) symbol
 int processCommaSymbols(FILE*, char);
 
+// function to handle operations related to ({) symbol 
 int processOpeningBraces(FILE*, char);
 
+// function to handle operations related to (}) symbol
 int processClosingBraces(FILE*, char);
 
-// main caller function
+// main program with application logic
 int main(){
-    // variable to collect junk data
+
+    // variable to collect junk data, currently being used as placeholder
     int flag = 0;
 
 
-    // file pointer to handle input and output streasms
+    // FILE POINTERS
+    // to handle read from input ugly file
     FILE *input;
-    FILE *output;
-    FILE *log = fopen("log.txt", "w");
 
-    // assign file pointers to files
+    // to write output as formatted code
+    FILE *output;
+
+    // to log operations into log.txt
+    FILE *log;
+
+    // assigning pointers to files
+
+    // open input file in read mode
     input = fopen("ugly.c", "r");
+
+    // open output file in write mode
     output = fopen("tidy.c", "w");
+
+    // open logs file in write mode, not in append to overwrite old data
     log = fopen("log.txt", "w");
 
-    // log operation starts
-    fprintf(log, "%d\t%s\n", ++lineNumber, "Loaded 3 files as pointers");   
+    // starting log operations
+    fprintf(log, "%d\t%s\n", ++lineNumber, "Logger Started");   
 
-    //  get initial character form file
+    //  feed initial character from file stream to set while true
     char ch = fgetc(input);
     
+    // close the log file to allow other processes to append it.
     fclose(log);
-    // loop through all characters of file
+
+    // MAIN ENGINE
+
+    // read all characters till the end of file
     while(ch != EOF){
 
-        // if charcter is semi colon, handle it
+        // apply semicolon conditions, and process if success
         if(processTerminationSymbols(output, ch)){
             flag = 1;
         }
+
+        // apply comma conditions, and process if success
         else if(processCommaSymbols(output, ch)){
             flag = 1;
         }
+
+        // apply opening bracket ({) conditions, and process if success
         else if(processOpeningBraces(output, ch)){
             // push('{');
             flag = 1;
         }
+
+        // apply closing bracket (}) conditions, and process if success
         else if(processClosingBraces(output, ch)){
             flag = 1;
         }
+
+        // when none of above, just print the character with indent
         else{
+
+            // open the logger, and write the character being printed, close it.
             FILE *log = fopen("log.txt", "a+");
             fprintf(log, "%d\t%s%c\n", ++lineNumber, "printing : ", ch);
             fclose(log);
 
+            // apply indentation as per global config, and then print the character to output
             indent(output);
             fputc(ch, output);
         }
 
-        // read one more charcter form stream
+        // read next character from stream, and continue the while loop
         ch = getc(input);
     }
 
+
+    // print the closing line of logs, and close 
     fprintf(log, "%d\t%s\n", ++lineNumber, "ENDING !");   
+    fclose(log);
+
+    // return the operation to os
     return 0;
 }
 
-// stack operations
+// STACK OPERATION FUNCTIONS
+
+/*
+// function to push character to stack
 void push(char s){
     if(top = MAX){
     }
@@ -91,6 +134,7 @@ void push(char s){
     }
 }
 
+// function to pop character from stack
 int pop(){
     if(top == -1){
         return 0;
@@ -100,7 +144,7 @@ int pop(){
     }
 }
 
-
+// function to return top element of stack
 char getTop(){
     if(top==-1){
         return '~';
@@ -108,90 +152,140 @@ char getTop(){
         return stack[top];
     }
 }
+*/
 
 
-// styling operations
-void indent(FILE *fs){
-    if(!lineStart){
-        lineStart = 1;
+
+// CORE ENGINE FUNCTIONS
+
+// to apply inline indent before printing character
+void indent(FILE *output){
+
+    // if given instance is the start of line character
+    if(lineStart){
+        // just a variable, what do you want it's description as ?
         int i;
+
+        // add indent to output stream
         for(i=0; i<indentLevel; i++){
-            fputc('\t',fs);
+            // writing character to output stream 
+            fputc('\t',output);
         }
+
+        // well, now since the first character is done, let's wait for line to end; 
+        lineStart = 0;
     }
-    // // give n level indent
 }
 
-// function returns 1 when passed character was termination symbol and add newline at end
+// handles the processes attached to termination symbol (;)
 int processTerminationSymbols(FILE* output, char ch){
+
+    // if stream character is a termination symbol
     if( ch == ';' ){
+
+        // open log file, add an entry of semicolon
         FILE *log = fopen("log.txt", "a+");
         fprintf(log, "%d\t%s\n", ++lineNumber, "printing ; , \\n");   
+        
+        // write the semicolon to output stream, followed by a newline sequence.
         fputc(';', output);
         fputc('\n', output);
 
+        // since ; signifies line end, we set lineStart=1 to indicate that next character is from new lien
         fprintf(log, "%d\t%s\n", ++lineNumber, "lineStart = 0");   
-        lineStart = 0;
+        lineStart = 1;
+
+        // release the log file and memory
         fclose(log);
+
+        // return 1 for success
         return 1;
     }
     else{
+        // return 0 for the sake of.
         return 0;
     }
 
 }
 
+// function to handle processes related to comma symbol
 int processCommaSymbols(FILE *output, char ch){
+
+    // if stream character is a comma (,)
     if(ch == ','){
-        // update logs
+        
+        // add entry to logs about processing comma
         FILE *log = fopen("log.txt", "a+");
         fprintf(log, "%d\t%s\n", ++lineNumber, "processing ,");
 
+        // just add a space before comma, and write to output
         fputc(' ', output);
         fputc(',', output);
 
+        // release the log file and memory
         fclose(log);
-        return 1;
-    }else{
-        return 0;
-    }
-}
 
-int processOpeningBraces(FILE *output, char ch){
-    if(ch=='{'){
-
-        // write logs
-        FILE *log = fopen("log.txt", "a+");
-        fprintf(log, "%d\t%s\n", ++lineNumber, "processing {");
-
-        // first print the curly braces to preserve code style
-        fputc('{', output);
-        fputc('\n', output);
-
-        // increase indent by one level
-
-        indentLevel++;
-        fprintf(log, "%d\t%s%d\n", ++lineNumber, "indentLevel=", indentLevel);
-        
-        lineStart = 0;
-
-        fclose(log);
+        // return 1 for success
         return 1;
     }
     else{
+        // return 0 for skip
         return 0;
     }
 }
 
+
+// function to handle Opening Braces
+int processOpeningBraces(FILE *output, char ch){
+    
+    // if the passed character is an opening bracket ({)
+    if(ch=='{'){
+
+        // mention in logs about the opening bracket
+        FILE *log = fopen("log.txt", "a+");
+        fprintf(log, "%d\t%s\n", ++lineNumber, "processing {");
+
+        // print the curly bracket, don't add an extra line to preserve code style
+        fputc('{', output);
+        fputc('\n', output);
+
+        // since { means a new code block, it must be one more level indented
+        indentLevel++;
+
+        // log about the indent level 
+        fprintf(log, "%d\t%s%d\n", ++lineNumber, "indentLevel=", indentLevel);
+        
+        // since opening brackets are always new line (mostly), trigger newLine
+        lineStart = 1;
+
+        // close logs and relaase memory
+        fclose(log);
+
+        // return 1 for success
+        return 1;
+    }
+    else{
+
+        // return 0 for skip
+        return 0;
+    }
+}
+
+
+// function to handle processes related to closing braces
 int processClosingBraces(FILE *output, char ch){
+
+    // if stream character is closing bracket
     if(ch=='}'){
         
+        // mention about the closing bracket in logs
         FILE *log = fopen("log.txt", "a+");
         fprintf(log, "%d\t%s\n", ++lineNumber, "processing }");
 
-        // indent it bitch
+        // indent, but indentLevel-1 to make it look nested
         int i=0;
         for(i=0; i<indentLevel-1; i++){
+            // write tabs !
             fputc('\t', output);
         }
 
@@ -199,12 +293,21 @@ int processClosingBraces(FILE *output, char ch){
         fputc('}', output);
         fputc('\n', output);
 
+
+        // since closing brackets mark end of codeblock, decrease indentLevel by 11
         indentLevel--;
+
+        // mention the indentLevel in logs
         fprintf(log, "%d\t%s%d\n", ++lineNumber, "indentLevel=", indentLevel);
 
+        // close logs and relase memory
+        fclose(log);
+
+        // return 1 for success
         return 1;
     }
     else{
+        // return 0 for skip ! there's no fail
         return 0;
     }
 }
