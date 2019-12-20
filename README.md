@@ -7,7 +7,8 @@ A handy binary written in C to tidy C code
 ### Sample
 
 **Old File :** [Ugly File](./example/ugly.c)
-**New File :** [Tidy File]('./example/tidy.c)
+
+**New File :** [Tidy File](./example/tidy.c)
 
 ---
 #### Todo
