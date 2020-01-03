@@ -3,14 +3,9 @@
 
 
 // Stack Operations
-// #define MAX 1024
-// char stack[MAX];
-// int top = -1;
-
-// stack operations
-// void push(char s);
-// int pop();
-// char getTop();
+#define MAX 1024
+char stack[MAX];
+int top = -1;
 
 // functions to manage styling
 int indentLevel = 0;
@@ -32,6 +27,13 @@ int processOpeningBraces(FILE*, char);
 // function to handle operations related to (}) symbol
 int processClosingBraces(FILE*, char);
 
+// stack operations
+int isFull();
+int isEmpty();
+int push(char);
+int pop();
+char peek();
+
 // main program with application logic
 int main(){
 
@@ -52,13 +54,13 @@ int main(){
     // assigning pointers to files
 
     // open input file in read mode
-    input = fopen("ugly.c", "r");
+    input = fopen("./example/ugly.c", "r");
 
     // open output file in write mode
-    output = fopen("tidy.c", "w");
+    output = fopen("./example/tidy.c", "w");
 
     // open logs file in write mode, not in append to overwrite old data
-    log = fopen("log.txt", "w");
+    log = fopen("./example/log.txt", "w");
 
     // starting log operations
     fprintf(log, "%d\t%s\n", ++lineNumber, "Logger Started");   
@@ -99,7 +101,7 @@ int main(){
         else{
 
             // open the logger, and write the character being printed, close it.
-            FILE *log = fopen("log.txt", "a+");
+            FILE *log = fopen("./example/log.txt", "a+");
             fprintf(log, "%d\t%s%c\n", ++lineNumber, "printing : ", ch);
             fclose(log);
 
@@ -120,41 +122,6 @@ int main(){
     // return the operation to os
     return 0;
 }
-
-// STACK OPERATION FUNCTIONS
-
-/*
-// function to push character to stack
-void push(char s){
-    if(top = MAX){
-    }
-    else{
-        top = top + 1;
-        stack[top] = s;
-    }
-}
-
-// function to pop character from stack
-int pop(){
-    if(top == -1){
-        return 0;
-    }else{
-        top = top-1;
-        return 1;
-    }
-}
-
-// function to return top element of stack
-char getTop(){
-    if(top==-1){
-        return '~';
-    }else{
-        return stack[top];
-    }
-}
-*/
-
-
 
 // CORE ENGINE FUNCTIONS
 
@@ -184,7 +151,7 @@ int processTerminationSymbols(FILE* output, char ch){
     if( ch == ';' ){
 
         // open log file, add an entry of semicolon
-        FILE *log = fopen("log.txt", "a+");
+        FILE *log = fopen("./example/log.txt", "a+");
         fprintf(log, "%d\t%s\n", ++lineNumber, "printing ; , \\n");   
         
         // write the semicolon to output stream, followed by a newline sequence.
@@ -215,7 +182,7 @@ int processCommaSymbols(FILE *output, char ch){
     if(ch == ','){
         
         // add entry to logs about processing comma
-        FILE *log = fopen("log.txt", "a+");
+        FILE *log = fopen("./example/log.txt", "a+");
         fprintf(log, "%d\t%s\n", ++lineNumber, "processing ,");
 
         // just add a space before comma, and write to output
@@ -234,7 +201,6 @@ int processCommaSymbols(FILE *output, char ch){
     }
 }
 
-
 // function to handle Opening Braces
 int processOpeningBraces(FILE *output, char ch){
     
@@ -242,7 +208,7 @@ int processOpeningBraces(FILE *output, char ch){
     if(ch=='{'){
 
         // mention in logs about the opening bracket
-        FILE *log = fopen("log.txt", "a+");
+        FILE *log = fopen("./example/log.txt", "a+");
         fprintf(log, "%d\t%s\n", ++lineNumber, "processing {");
 
         // print the curly bracket, don't add an extra line to preserve code style
@@ -271,7 +237,6 @@ int processOpeningBraces(FILE *output, char ch){
     }
 }
 
-
 // function to handle processes related to closing braces
 int processClosingBraces(FILE *output, char ch){
 
@@ -279,7 +244,7 @@ int processClosingBraces(FILE *output, char ch){
     if(ch=='}'){
         
         // mention about the closing bracket in logs
-        FILE *log = fopen("log.txt", "a+");
+        FILE *log = fopen("./example/log.txt", "a+");
         fprintf(log, "%d\t%s\n", ++lineNumber, "processing }");
 
         // indent, but indentLevel-1 to make it look nested
@@ -310,4 +275,47 @@ int processClosingBraces(FILE *output, char ch){
         // return 0 for skip ! there's no fail
         return 0;
     }
+}
+
+// return 1 when stack is full
+int isFull(){
+  return top==MAX;
+}
+
+// returns 1 when stack is empty
+int isEmpty(){
+  return top==-1;
+}
+
+// returns 1 when character pushed to stack, 0 when stack full
+int push(char c){
+  if(isFull()){
+    return 0;
+  }
+  else{
+    top++;
+    stack[top] = c;
+    return 1;
+  }
+}
+
+// returns 1 when element removed, 0 when stack empty
+int pop(){
+  if(isEmpty()){
+    return 0;
+  }
+  else{
+    top--;
+    return 1;
+  }
+}
+
+// return the top element of stack
+char peek(){
+  if(isEmpty()){
+    return '0';
+  }
+  else{
+    return stack[top];
+  }
 }
