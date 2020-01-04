@@ -27,6 +27,12 @@ int processOpeningBraces(FILE*, char);
 // function to handle operations related to (}) symbol
 int processClosingBraces(FILE*, char);
 
+// function to handle operations related to `(` symbol
+int processOpeningBracket(FILE*, char);
+
+// function to handle operations related to `)` symbol
+int processClosingBracket(FILE*, char);
+
 // stack operations
 int isFull();
 int isEmpty();
@@ -39,7 +45,6 @@ int main(){
 
     // variable to collect junk data, currently being used as placeholder
     int flag = 0;
-
 
     // FILE POINTERS
     // to handle read from input ugly file
@@ -86,20 +91,27 @@ int main(){
             flag = 1;
         }
 
-        // apply opening bracket ({) conditions, and process if success
+        // apply opening braces ({) conditions, and process if success
         else if(processOpeningBraces(output, ch)){
-            // push('{');
             flag = 1;
         }
 
-        // apply closing bracket (}) conditions, and process if success
+        // apply closing braces (}) conditions, and process if success
         else if(processClosingBraces(output, ch)){
+            flag = 1;
+        }
+
+        // apply opening and closing bracket conditions
+        else if(processOpeningBracket(output, ch)){
+            flag = 1;
+        }
+
+        else if(processClosingBracket(output, ch)){
             flag = 1;
         }
 
         // when none of above, just print the character with indent
         else{
-
             // open the logger, and write the character being printed, close it.
             FILE *log = fopen("./example/log.txt", "a+");
             fprintf(log, "%d\t%s%c\n", ++lineNumber, "printing : ", ch);
@@ -112,8 +124,13 @@ int main(){
 
         // read next character from stream, and continue the while loop
         ch = getc(input);
+
     }
 
+	while(top!=-1){
+		printf("%c\t", peek());
+		pop();
+	}
 
     // print the closing line of logs, and close 
     fprintf(log, "%d\t%s\n", ++lineNumber, "ENDING !");   
@@ -214,6 +231,9 @@ int processOpeningBraces(FILE *output, char ch){
         // print the curly bracket, don't add an extra line to preserve code style
         fputc('{', output);
         fputc('\n', output);
+		
+		// add { to stack
+		push('{');
 
         // since { means a new code block, it must be one more level indented
         indentLevel++;
@@ -258,6 +278,9 @@ int processClosingBraces(FILE *output, char ch){
         fputc('}', output);
         fputc('\n', output);
 
+		if(peek()=='{'){
+			pop();
+		}
 
         // since closing brackets mark end of codeblock, decrease indentLevel by 11
         indentLevel--;
@@ -275,6 +298,48 @@ int processClosingBraces(FILE *output, char ch){
         // return 0 for skip ! there's no fail
         return 0;
     }
+}
+
+// function to handle operations related to opening bracket `(`
+int processOpeningBracket(FILE *output, char ch){
+  // check if incoming character is (
+	if(ch == '('){
+		// mention in logs about the opening bracket
+		FILE *log = fopen("./example/log.txt", "a+");
+		fprintf(log, "%d\t%s\n", ++lineNumber, "Adding ( to stack");
+		
+		// push a bracket into stack
+		push('(');
+
+		// write bracket to file
+		fputc('(', output);
+
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
+
+// function to handle operations related to closing bracket `)`
+int processClosingBracket(FILE *output, char ch){
+  // check if incoming character is )
+  if(ch == ')'){
+    // check if previous character is (
+	FILE *log = fopen("./example/log.txt", "a+");
+	fprintf(log, "%d\t%s\n", ++lineNumber, "Popping ) from stack");
+	
+	// then pop a character, removing a (
+	if(peek() == '('){
+		pop();
+	}
+
+	fputc(')', output);
+    return 1;
+  }
+  else{
+    return 0;
+  }
 }
 
 // return 1 when stack is full

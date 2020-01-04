@@ -135,7 +135,6 @@
 133	printing : u
 134	printing : l
 135	printing : l
-136	printing : (
 137	printing : s
 138	printing : t
 139	printing : a
@@ -144,7 +143,6 @@
 142	printing :  
 143	printing : *
 144	printing : s
-145	printing : )
 146	processing {
 147	indentLevel=1
 148	printing : r
@@ -154,7 +152,6 @@
 152	printing : r
 153	printing : n
 154	printing :  
-155	printing : (
 156	printing : s
 157	printing : -
 158	printing : >
@@ -179,7 +176,6 @@
 177	printing :  
 178	printing : -
 179	printing : 1
-180	printing : )
 181	printing :  
 182	printing : ?
 183	printing :  
@@ -203,7 +199,6 @@
 201	printing : p
 202	printing : t
 203	printing : y
-204	printing : (
 205	printing : s
 206	printing : t
 207	printing : a
@@ -212,7 +207,6 @@
 210	printing :  
 211	printing : *
 212	printing : s
-213	printing : )
 214	processing {
 215	indentLevel=1
 216	printing : r
@@ -222,7 +216,6 @@
 220	printing : r
 221	printing : n
 222	printing :  
-223	printing : (
 224	printing : s
 225	printing : -
 226	printing : >
@@ -235,7 +228,6 @@
 233	printing :  
 234	printing : -
 235	printing : 1
-236	printing : )
 237	printing :  
 238	printing : ?
 239	printing :  
@@ -256,7 +248,6 @@
 254	printing : u
 255	printing : s
 256	printing : h
-257	printing : (
 258	printing : s
 259	printing : t
 260	printing : a
@@ -275,23 +266,18 @@
 273	printing : a
 274	printing : t
 275	printing : a
-276	printing : )
 277	processing {
 278	indentLevel=1
 279	printing : i
 280	printing : f
 281	printing :  
-282	printing : (
 283	printing : i
 284	printing : s
 285	printing : F
 286	printing : u
 287	printing : l
 288	printing : l
-289	printing : (
 290	printing : s
-291	printing : )
-292	printing : )
 293	processing {
 294	indentLevel=2
 295	printing : p
@@ -300,7 +286,6 @@
 298	printing : n
 299	printing : t
 300	printing : f
-301	printing : (
 302	printing : "
 303	printing : \
 304	printing : n
@@ -323,7 +308,6 @@
 321	printing : \
 322	printing : n
 323	printing : "
-324	printing : )
 325	printing ; , \n
 326	lineStart = 0
 327	printing : r
@@ -350,7 +334,6 @@
 348	printing : n
 349	printing : t
 350	printing : f
-351	printing : (
 352	printing : "
 353	printing : \
 354	printing : n
@@ -384,7 +367,6 @@
 382	printing : a
 383	printing : t
 384	printing : a
-385	printing : )
 386	printing ; , \n
 387	lineStart = 0
 388	printing : s
@@ -435,7 +417,6 @@
 433	printing : p
 434	printing : o
 435	printing : p
-436	printing : (
 437	printing : s
 438	printing : t
 439	printing : a
@@ -444,12 +425,10 @@
 442	printing :  
 443	printing : *
 444	printing : s
-445	printing : )
 446	processing {
 447	indentLevel=1
 448	printing : i
 449	printing : f
-450	printing : (
 451	printing : i
 452	printing : s
 453	printing : E
@@ -457,10 +436,7 @@
 455	printing : p
 456	printing : t
 457	printing : y
-458	printing : (
 459	printing : s
-460	printing : )
-461	printing : )
 462	processing {
 463	indentLevel=2
 464	printing : p
@@ -469,7 +445,6 @@
 467	printing : n
 468	printing : t
 469	printing : f
-470	printing : (
 471	printing : "
 472	printing : \
 473	printing : n
@@ -491,7 +466,6 @@
 489	printing : \
 490	printing : n
 491	printing : "
-492	printing : )
 493	printing ; , \n
 494	lineStart = 0
 495	printing : r
@@ -518,7 +492,6 @@
 516	printing : n
 517	printing : t
 518	printing : f
-519	printing : (
 520	printing : "
 521	printing : \
 522	printing : n
@@ -564,7 +537,6 @@
 562	printing : o
 563	printing : p
 564	printing : ]
-565	printing : )
 566	printing ; , \n
 567	lineStart = 0
 568	printing : s
@@ -613,7 +585,6 @@
 611	printing : l
 612	printing : a
 613	printing : y
-614	printing : (
 615	printing : s
 616	printing : t
 617	printing : a
@@ -622,7 +593,6 @@
 620	printing :  
 621	printing : *
 622	printing : s
-623	printing : )
 624	processing {
 625	indentLevel=1
 626	printing : i
@@ -638,7 +608,6 @@
 636	printing : n
 637	printing : t
 638	printing : f
-639	printing : (
 640	printing : "
 641	printing : \
 642	printing : n
@@ -663,13 +632,11 @@
 661	printing : \
 662	printing : n
 663	printing : "
-664	printing : )
 665	printing ; , \n
 666	lineStart = 0
 667	printing : f
 668	printing : o
 669	printing : r
-670	printing : (
 671	printing : i
 672	printing : =
 673	printing : s
@@ -691,7 +658,6 @@
 689	printing : i
 690	printing : -
 691	printing : -
-692	printing : )
 693	processing {
 694	indentLevel=2
 695	printing : p
@@ -700,7 +666,6 @@
 698	printing : n
 699	printing : t
 700	printing : f
-701	printing : (
 702	printing : "
 703	printing :  
 704	printing : %
@@ -722,7 +687,6 @@
 720	printing : [
 721	printing : i
 722	printing : ]
-723	printing : )
 724	printing ; , \n
 725	lineStart = 0
 726	processing }
@@ -733,12 +697,10 @@
 731	printing : n
 732	printing : t
 733	printing : f
-734	printing : (
 735	printing : "
 736	printing : \
 737	printing : n
 738	printing : "
-739	printing : )
 740	printing ; , \n
 741	lineStart = 0
 742	printing : r
@@ -761,8 +723,6 @@
 759	printing : a
 760	printing : i
 761	printing : n
-762	printing : (
-763	printing : )
 764	processing {
 765	indentLevel=1
 766	printing : i
@@ -871,20 +831,17 @@
 869	printing : l
 870	printing : o
 871	printing : c
-872	printing : (
 873	printing : s
 874	printing : i
 875	printing : z
 876	printing : e
 877	printing : o
 878	printing : f
-879	printing : (
 880	printing : s
 881	printing : t
 882	printing : a
 883	printing : c
 884	printing : k
-885	printing : )
 886	printing : *
 887	printing : n
 888	printing : u
@@ -903,7 +860,6 @@
 901	printing : i
 902	printing : t
 903	printing : y
-904	printing : )
 905	printing ; , \n
 906	lineStart = 0
 907	printing : m
@@ -917,7 +873,6 @@
 915	printing : n
 916	printing : t
 917	printing : f
-918	printing : (
 919	printing : "
 920	printing : \
 921	printing : n
@@ -988,7 +943,6 @@
 986	printing : \
 987	printing : n
 988	printing : "
-989	printing : )
 990	printing ; , \n
 991	lineStart = 0
 992	printing : s
@@ -996,7 +950,6 @@
 994	printing : a
 995	printing : n
 996	printing : f
-997	printing : (
 998	printing : "
 999	printing :  
 1000	printing : %
@@ -1011,7 +964,6 @@
 1009	printing : i
 1010	printing : c
 1011	printing : e
-1012	printing : )
 1013	printing ; , \n
 1014	lineStart = 0
 1015	printing : s
@@ -1020,14 +972,12 @@
 1018	printing : t
 1019	printing : c
 1020	printing : h
-1021	printing : (
 1022	printing : c
 1023	printing : h
 1024	printing : o
 1025	printing : i
 1026	printing : c
 1027	printing : e
-1028	printing : )
 1029	processing {
 1030	indentLevel=2
 1031	printing : c
@@ -1053,7 +1003,6 @@
 1051	printing : l
 1052	printing : a
 1053	printing : y
-1054	printing : (
 1055	printing : n
 1056	printing : u
 1057	printing : m
@@ -1061,7 +1010,6 @@
 1059	printing : e
 1060	printing : r
 1061	printing : s
-1062	printing : )
 1063	printing ; , \n
 1064	lineStart = 0
 1065	printing : g
@@ -1088,7 +1036,6 @@
 1086	printing : n
 1087	printing : t
 1088	printing : f
-1089	printing : (
 1090	printing : "
 1091	printing : \
 1092	printing : n
@@ -1128,7 +1075,6 @@
 1126	printing : :
 1127	printing :  
 1128	printing : "
-1129	printing : )
 1130	printing ; , \n
 1131	lineStart = 0
 1132	printing : s
@@ -1136,7 +1082,6 @@
 1134	printing : a
 1135	printing : n
 1136	printing : f
-1137	printing : (
 1138	printing : "
 1139	printing :  
 1140	printing : %
@@ -1151,7 +1096,6 @@
 1149	printing : l
 1150	printing : e
 1151	printing : r
-1152	printing : )
 1153	printing ; , \n
 1154	lineStart = 0
 1155	printing : c
@@ -1167,7 +1111,6 @@
 1165	printing : u
 1166	printing : s
 1167	printing : h
-1168	printing : (
 1169	printing : n
 1170	printing : u
 1171	printing : m
@@ -1183,7 +1126,6 @@
 1181	printing : l
 1182	printing : e
 1183	printing : r
-1184	printing : )
 1185	printing ; , \n
 1186	lineStart = 0
 1187	printing : g
@@ -1216,7 +1158,6 @@
 1214	printing : p
 1215	printing : o
 1216	printing : p
-1217	printing : (
 1218	printing : n
 1219	printing : u
 1220	printing : m
@@ -1224,7 +1165,6 @@
 1222	printing : e
 1223	printing : r
 1224	printing : s
-1225	printing : )
 1226	printing ; , \n
 1227	lineStart = 0
 1228	printing : g
@@ -1272,3 +1212,64 @@
 1270	indentLevel=0
 1271	printing : 
 
+136	Adding ( to stack
+1272	ENDING !
+1225	Popping ) from stack
+1217	Adding ( to stack
+1184	Popping ) from stack
+1168	Adding ( to stack
+1152	Popping ) from stack
+1137	Adding ( to stack
+1129	Popping ) from stack
+1089	Adding ( to stack
+1062	Popping ) from stack
+1054	Adding ( to stack
+1028	Popping ) from stack
+1021	Adding ( to stack
+1012	Popping ) from stack
+997	Adding ( to stack
+989	Popping ) from stack
+918	Adding ( to stack
+904	Popping ) from stack
+885	Popping ) from stack
+879	Adding ( to stack
+872	Adding ( to stack
+763	Popping ) from stack
+762	Adding ( to stack
+739	Popping ) from stack
+734	Adding ( to stack
+723	Popping ) from stack
+701	Adding ( to stack
+692	Popping ) from stack
+670	Adding ( to stack
+664	Popping ) from stack
+639	Adding ( to stack
+623	Popping ) from stack
+614	Adding ( to stack
+565	Popping ) from stack
+519	Adding ( to stack
+492	Popping ) from stack
+470	Adding ( to stack
+461	Popping ) from stack
+460	Popping ) from stack
+458	Adding ( to stack
+450	Adding ( to stack
+445	Popping ) from stack
+436	Adding ( to stack
+385	Popping ) from stack
+351	Adding ( to stack
+324	Popping ) from stack
+301	Adding ( to stack
+292	Popping ) from stack
+291	Popping ) from stack
+289	Adding ( to stack
+282	Adding ( to stack
+276	Popping ) from stack
+257	Adding ( to stack
+236	Popping ) from stack
+223	Adding ( to stack
+213	Popping ) from stack
+204	Adding ( to stack
+180	Popping ) from stack
+155	Adding ( to stack
+145	Popping ) from stack
