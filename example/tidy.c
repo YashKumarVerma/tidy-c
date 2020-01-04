@@ -38,9 +38,7 @@ int pop(stack *s){
 int display(stack *s){
 	int i;
 	printf("\n Displaying Stack \n");
-	for(i=s->top;
-	 i>=0;
-	 i--){
+	for(i=s->top;	 i>=0;	 i--){
 		printf(" %d \t" , s->array[i]);
 	}
 	printf("\n");

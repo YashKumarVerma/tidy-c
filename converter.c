@@ -33,6 +33,9 @@ int processOpeningBracket(FILE*, char);
 // function to handle operations related to `)` symbol
 int processClosingBracket(FILE*, char);
 
+// function to handle operations related to string i/o
+int processInvertedComma(FILE*, char);
+
 // stack operations
 int isFull();
 int isEmpty();
@@ -101,14 +104,20 @@ int main(){
             flag = 1;
         }
 
-        // apply opening and closing bracket conditions
+        // apply opening  bracket conditions
         else if(processOpeningBracket(output, ch)){
             flag = 1;
         }
 
+        // apply closing bracket conditions
         else if(processClosingBracket(output, ch)){
             flag = 1;
         }
+
+		// process operations related to inverted comma
+		else if(processInvertedComma(output, ch)){
+			flag = 1;
+		}
 
         // when none of above, just print the character with indent
         else{
@@ -170,10 +179,16 @@ int processTerminationSymbols(FILE* output, char ch){
         // open log file, add an entry of semicolon
         FILE *log = fopen("./example/log.txt", "a+");
         fprintf(log, "%d\t%s\n", ++lineNumber, "printing ; , \\n");   
-        
-        // write the semicolon to output stream, followed by a newline sequence.
+
+        // write the semicolon to output stream
         fputc(';', output);
-        fputc('\n', output);
+
+		// to tackle for loop breaking into multiple files, don't give newline if inside brackets
+		if(peek()=='('){
+		}else{
+			fputc('\n', output);
+		}
+        
 
         // since ; signifies line end, we set lineStart=1 to indicate that next character is from new lien
         fprintf(log, "%d\t%s\n", ++lineNumber, "lineStart = 0");   
@@ -325,7 +340,6 @@ int processOpeningBracket(FILE *output, char ch){
 int processClosingBracket(FILE *output, char ch){
   // check if incoming character is )
   if(ch == ')'){
-    // check if previous character is (
 	FILE *log = fopen("./example/log.txt", "a+");
 	fprintf(log, "%d\t%s\n", ++lineNumber, "Popping ) from stack");
 	
@@ -334,12 +348,39 @@ int processClosingBracket(FILE *output, char ch){
 		pop();
 	}
 
+	// writ to output
 	fputc(')', output);
     return 1;
   }
   else{
     return 0;
   }
+}
+
+// function to handle operations related to inverted commas
+int processInvertedComma(FILE *output, char ch){
+	// check if incoming character is "
+	if(ch == '"'){
+		FILE *log = fopen("./example/log.txt", "a+");
+		fprintf(log, "%d\t%s\n", ++lineNumber, "processing \" ");
+
+		// if opening exists in stack
+		if(peek() == '"'){
+			fprintf(log, "%d\t%s\n", ++lineNumber, "popping \" ");
+			pop();
+		}
+		// if this inverted comma represents opening string
+		else{
+			fprintf(log, "%d\t%s\n", ++lineNumber, "pushing \" ");
+			push('"');
+		}
+
+		// write icomma to output strea
+		fputc(ch, output);
+		return 1;
+	}else{
+		return 0;
+	}
 }
 
 // return 1 when stack is full
