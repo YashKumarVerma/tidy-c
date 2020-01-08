@@ -20,5 +20,10 @@ A handy binary written in C to tidy C code
 #### Todo
 - [ ] Format switch cases
 
+#### DataStructures Used
+- [x] Stacks to check parenthesis in code
+- [x] Stacks to escape content inside strings
+- [ ] Queue to refer previously printed data
+
 ---
 Author : [Yash Kumar Verma](http://github.com/yashkumarverma)
