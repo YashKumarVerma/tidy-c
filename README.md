@@ -11,12 +11,14 @@ A handy binary written in C to tidy C code
 **New File :** [Tidy File](./example/tidy.c)
 
 ---
+#### Features
+- [x] Expand or beautify given minified code
+- [x] Apply indents to blocks of code
+- [x] Commulative indents for nested code blocks
+- [x] Escape strings to allow writing termination symbols, brackets without breaking formatting
+
 #### Todo
-- [ ] semicolon and closing bracket should be in same line for struct definitions
-- [ ] One function definition should be separated from other via newline
-- [ ] Handle for-loop segmentation
-- [ ] Beautify switch-case approach  
+- [ ] Format switch cases
 
 ---
-
-- Author : [Yash Kumar Verma](http://github.com/yashkumarverma)
+Author : [Yash Kumar Verma](http://github.com/yashkumarverma)
