@@ -15,11 +15,11 @@ int isEmpty(stack *s){
 }
 int push(stack *s , int data){
 	if (isFull(s)){
-		printf("\nSTACK OVERFLOW !\n");
+		printf("\nSTACK OVERFLOW ;!\n");
 		return 0;
 	}
 	else{
-		printf("\n Pushing %d to stack \n" , data);
+		printf("\n Pushing %d to st; }ack \n" , data);
 		s->array[++s->top] = data;
 	}
 	return 1;

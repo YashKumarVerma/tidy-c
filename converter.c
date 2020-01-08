@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<string.h>
 
-
 // Stack Operations
 #define MAX 1024
 char stack[MAX];
@@ -13,7 +12,7 @@ int lineStart = 0;
 int lineNumber = 0;
 
 // function to give indentation as per global config
-void indent(FILE *fs);
+void indent(FILE*);
 
 // function to handle processes attached to termination symbol
 int processTerminationSymbols(FILE*, char);
@@ -35,6 +34,9 @@ int processClosingBracket(FILE*, char);
 
 // function to handle operations related to string i/o
 int processInvertedComma(FILE*, char);
+
+// function to handle text inside strings
+int processEscapedString(FILE*, char);
 
 // stack operations
 int isFull();
@@ -59,8 +61,6 @@ int main(){
     // to log operations into log.txt
     FILE *log;
 
-    // assigning pointers to files
-
     // open input file in read mode
     input = fopen("./example/ugly.c", "r");
 
@@ -83,9 +83,16 @@ int main(){
 
     // read all characters till the end of file
     while(ch != EOF){
+		// reset flag
+		flag = 0;
+
+		// if escape mode on, directly print skipping checks
+		if(processEscapedString(output, ch)){
+			flag = 1;
+		}
 
         // apply semicolon conditions, and process if success
-        if(processTerminationSymbols(output, ch)){
+        else if(processTerminationSymbols(output, ch) ){
             flag = 1;
         }
 
@@ -119,9 +126,10 @@ int main(){
 			flag = 1;
 		}
 
-        // when none of above, just print the character with indent
+        // when none of above, and not processing a string inside "
         else{
-            // open the logger, and write the character being printed, close it.
+			// printCharacter:;
+		    // open the logger, and write the character being printed, close it.
             FILE *log = fopen("./example/log.txt", "a+");
             fprintf(log, "%d\t%s%c\n", ++lineNumber, "printing : ", ch);
             fclose(log);
@@ -136,9 +144,16 @@ int main(){
 
     }
 
-	while(top!=-1){
-		printf("%c\t", peek());
-		pop();
+	// print the unbalanced characters
+	if(top==-1){
+		printf("All Expressions Balanced\n");
+	}
+	else{
+		printf("Expressions not Balanced ! \n");
+		while(top!=-1){
+			printf("%c\t", peek());
+			pop();
+		}
 	}
 
     // print the closing line of logs, and close 
@@ -383,6 +398,23 @@ int processInvertedComma(FILE *output, char ch){
 	}
 }
 
+// returns 1 when current character is inside string, 0 when outside
+int processEscapedString(FILE *output, char ch){
+	// if current operation under string
+	if(peek() == '"' && ch != '"'){
+
+		// log current operation 
+		FILE *log = fopen("./example/log.txt", "a+");
+		fprintf(log, "%d\t%s\t%c\n", ++lineNumber, "printing escaped ", ch);
+
+		// simply print it
+		fputc(ch, output);
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
 // return 1 when stack is full
 int isFull(){
   return top==MAX;
